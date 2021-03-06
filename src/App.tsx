@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { CssBaseline, Toolbar } from '@material-ui/core';
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import SideNavigationBar from './components/SideNvigationBar/SideNavigationBar';
+import Home from './pages/Home';
+import User from './pages/User';
+import AppNavigationBar from './components/AppNavigationBar/AppNavigationBar';
 
-function App() {
+const App = () => {
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className={classes.root}>
+          <CssBaseline />
+          <AppNavigationBar />
+          <SideNavigationBar />
+          <main className={classes.content}>
+            <Toolbar />
+            <Switch>
+                <Route exact path="/">
+                    <Redirect to="/home" />
+                </Route>
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/User" component={User} />
+            </Switch>
+          </main>
+      </div>
+    </Router>
   );
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  }),
+);
+
 
 export default App;
